@@ -1275,9 +1275,25 @@
                 <h3>🎉 Votre site est prêt !</h3>
                 ${recapHtml}
                 <p>Site + intro animée + jeu interactif</p>
-                <div class="price-tag">9€</div>
-                <br>
-                <button class="pay-btn" type="button">💳 Créer le site</button>
+                <div class="price-tag">9€ TTC</div>
+                
+                <div class="legal-checkboxes" style="text-align:left; margin:16px 0; padding:12px; background:rgba(0,0,0,0.05); border-radius:12px; font-size:11px;">
+                    <label style="display:flex; align-items:flex-start; gap:8px; margin-bottom:10px; cursor:pointer;">
+                        <input type="checkbox" id="accept-cgv" style="margin-top:2px; min-width:16px;">
+                        <span>J'ai lu et j'accepte les <a href="https://fete.devhub.wiki/cgv.html" target="_blank" style="color:#128C7E;">CGV</a></span>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:8px; margin-bottom:10px; cursor:pointer;">
+                        <input type="checkbox" id="accept-privacy" style="margin-top:2px; min-width:16px;">
+                        <span>J'ai lu et j'accepte la <a href="https://fete.devhub.wiki/confidentialite.html" target="_blank" style="color:#128C7E;">Politique de Confidentialité</a></span>
+                    </label>
+                    <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
+                        <input type="checkbox" id="accept-retractation" style="margin-top:2px; min-width:16px;">
+                        <span>Je demande l'exécution immédiate et reconnais perdre mon droit de rétractation de 14 jours</span>
+                    </label>
+                </div>
+                
+                <button class="pay-btn" type="button" id="pay-button" disabled style="opacity:0.5;cursor:not-allowed;">💳 Payer 9€</button>
+                <p style="font-size:10px; color:#666; margin-top:8px;">🔒 Paiement sécurisé par Stripe</p>
             `;
             
             const msgDiv = document.createElement('div');
@@ -1286,8 +1302,24 @@
             chat.appendChild(msgDiv);
             scrollToBottom();
             
-            celebDiv.querySelector('.pay-btn').onclick = handlePayment;
-            inputArea.innerHTML = '<p style="text-align:center;padding:10px;color:#666;font-size:12px;">👆 Cliquez sur le bouton</p>';
+            // Handle checkbox validation for legal compliance
+            const checkboxes = celebDiv.querySelectorAll('input[type="checkbox"]');
+            const payBtn = celebDiv.querySelector('.pay-btn');
+            
+            function updatePayButton() {
+                const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+                payBtn.disabled = !allChecked;
+                payBtn.style.opacity = allChecked ? '1' : '0.5';
+                payBtn.style.cursor = allChecked ? 'pointer' : 'not-allowed';
+            }
+            
+            checkboxes.forEach(cb => cb.addEventListener('change', updatePayButton));
+            
+            payBtn.onclick = function() {
+                if (!payBtn.disabled) handlePayment();
+            };
+            
+            inputArea.innerHTML = '<p style="text-align:center;padding:10px;color:#666;font-size:12px;">☑️ Cochez les cases puis cliquez sur Payer</p>';
         }
 
         // ============ HANDLE INPUT ============
@@ -1333,5 +1365,17 @@
             alert('→ Stripe Checkout\n\nDonnées collectées :\n' + JSON.stringify(userData, null, 2).substring(0, 500));
         }
     </script>
+
+    <!-- Legal Footer -->
+    <footer style="background:#2D3436; color:#999; padding:24px 20px; text-align:center; font-size:12px;">
+        <div style="margin-bottom:12px;">
+            <a href="https://fete.devhub.wiki/mentions-legales.html" style="color:#ccc; margin:0 12px; text-decoration:none;">Mentions légales</a>
+            <a href="https://fete.devhub.wiki/cgv.html" style="color:#ccc; margin:0 12px; text-decoration:none;">CGV</a>
+            <a href="https://fete.devhub.wiki/confidentialite.html" style="color:#ccc; margin:0 12px; text-decoration:none;">Confidentialité</a>
+            <a href="mailto:contact@devhub.wiki" style="color:#ccc; margin:0 12px; text-decoration:none;">Contact</a>
+        </div>
+        <p>🎂 FêteIci — 9€ TTC · Paiement sécurisé Stripe</p>
+        <p style="margin-top:8px;"><a href="https://devhub.wiki" style="color:#4ECDC4; text-decoration:none;">DevHub Agency</a></p>
+    </footer>
 </body>
 </html>
