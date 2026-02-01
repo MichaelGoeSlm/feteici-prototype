@@ -833,11 +833,22 @@
                 id: 'messageProposal',
                 messages: ["Voici ma proposition :", "{{generatedMessage}}"],
                 input: 'options',
-                options: ["✅ Parfait !", "✍️ Je préfère écrire"],
+                options: ["✅ Parfait !", "🔄 Autre idée", "✍️ Je préfère écrire"],
                 field: 'messageApproval',
                 condition: () => userData.ambiance,
                 onEnter: () => {
                     userData.generatedMessage = generateInviteMessage();
+                }
+            },
+            {
+                id: 'regenerateInvite',
+                messages: ["Voici une autre idée :", "{{generatedMessage}}"],
+                input: 'options',
+                options: ["✅ Parfait !", "✍️ Je préfère écrire"],
+                field: 'messageApproval2',
+                condition: () => userData.messageApproval === "🔄 Autre idée",
+                onEnter: () => {
+                    userData.generatedMessage = generateInviteMessage(true);
                 }
             },
             {
@@ -846,7 +857,7 @@
                 input: 'text',
                 field: 'message',
                 placeholder: "Votre message...",
-                condition: () => userData.messageApproval === "✍️ Je préfère écrire"
+                condition: () => userData.messageApproval === "✍️ Je préfère écrire" || userData.messageApproval2 === "✍️ Je préfère écrire"
             },
             {
                 id: 'rsvp',
@@ -953,18 +964,31 @@
             return opts[alternate ? 1 : 0];
         }
 
-        function generateInviteMessage() {
+        function generateInviteMessage(alternate = false) {
             const age = userData.age;
             const amb = userData.ambiance;
             
             const messages = {
-                "🥂 Festif": `${age} ans, ça se fête ! Venez célébrer avec moi, ambiance garantie ! 🎉`,
-                "💕 Intime": `Je serais ravi(e) de vous accueillir pour fêter mes ${age} ans dans une ambiance chaleureuse. À très vite ! 💕`,
-                "👔 Pro": `${age} ans, ça se fête ! Je serais ravi(e) de vous accueillir pour une soirée décontractée. 🥂`,
-                "👨‍👩‍👧 Famille": `Mes ${age} ans arrivent et j'aimerais les fêter avec vous tous ! Venez nombreux ! 💝`
+                "🥂 Festif": [
+                    `${age} ans, ça se fête ! Venez célébrer avec moi, ambiance garantie ! 🎉`,
+                    `C'est l'heure de faire la fête ! Rejoignez-moi pour mes ${age} ans, on va s'éclater ! 🥳`
+                ],
+                "💕 Intime": [
+                    `Je serais ravi(e) de vous accueillir pour fêter mes ${age} ans dans une ambiance chaleureuse. À très vite ! 💕`,
+                    `Pour mes ${age} ans, j'ai envie de moments précieux avec vous. Venez partager ce moment unique ! 💝`
+                ],
+                "👔 Pro": [
+                    `${age} ans, ça se fête ! Je serais ravi(e) de vous accueillir pour une soirée décontractée. 🥂`,
+                    `L'occasion de se retrouver hors du bureau pour célébrer mes ${age} ans ! Ambiance conviviale garantie. 🎉`
+                ],
+                "👨‍👩‍👧 Famille": [
+                    `Mes ${age} ans arrivent et j'aimerais les fêter avec vous tous ! Venez nombreux ! 💝`,
+                    `Rien de mieux que la famille pour fêter mes ${age} ans ! J'ai hâte de vous voir tous réunis ! 🎂`
+                ]
             };
             
-            return messages[amb] || messages["🥂 Festif"];
+            const opts = messages[amb] || messages["🥂 Festif"];
+            return opts[alternate ? 1 : 0];
         }
 
         // ============ PROCESS STEP ============
