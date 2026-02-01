@@ -37,6 +37,7 @@
             background: var(--light);
             color: var(--dark);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         /* ============ HERO SECTION ============ */
@@ -142,6 +143,9 @@
             gap: 12px;
             transition: all 0.3s ease;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
         }
 
         .cta-button:hover {
@@ -219,43 +223,104 @@
             font-size: 0.95rem;
         }
 
-        /* ============ CHAT SECTION ============ */
-        .chat-section {
-            padding: 60px 20px 100px;
-            background: linear-gradient(180deg, var(--light) 0%, #E8E8E8 100%);
+        /* ============ MODAL OVERLAY ============ */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
-        .chat-section .section-title {
-            margin-bottom: 32px;
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
+        .modal-overlay.active .phone-mockup {
+            transform: scale(1) translateY(0);
+        }
+
+        /* ============ PHONE MOCKUP ============ */
         .phone-mockup {
-            max-width: 420px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 400px;
             background: #1a1a1a;
-            border-radius: 48px;
-            padding: 12px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.3);
+            border-radius: 44px;
+            padding: 10px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+            transform: scale(0.9) translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .phone-screen {
             background: var(--wa-bg);
-            border-radius: 40px;
+            border-radius: 36px;
             overflow: hidden;
-            height: 700px;
+            height: 75vh;
+            max-height: 650px;
             display: flex;
             flex-direction: column;
         }
 
         @media (max-width: 500px) {
+            .modal-overlay {
+                padding: 0;
+            }
             .phone-mockup {
                 border-radius: 0;
                 padding: 0;
                 max-width: 100%;
+                height: 100%;
             }
             .phone-screen {
                 border-radius: 0;
-                height: 85vh;
+                height: 100%;
+                max-height: none;
+            }
+        }
+
+        /* Close button */
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+
+        .close-modal:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 500px) {
+            .close-modal {
+                top: 12px;
+                right: 12px;
+                width: 36px;
+                height: 36px;
+                font-size: 20px;
             }
         }
 
@@ -263,7 +328,7 @@
         .chat-header {
             background: var(--wa-header);
             color: white;
-            padding: 12px 16px;
+            padding: 14px 16px;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -271,14 +336,15 @@
         }
 
         .avatar {
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             background: linear-gradient(135deg, #FF6B6B, #FFE66D);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 20px;
+            flex-shrink: 0;
         }
 
         .contact-info h2 {
@@ -309,16 +375,16 @@
         .chat-area {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9c9c9' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
         .message {
-            max-width: 85%;
-            padding: 8px 12px;
+            max-width: 82%;
+            padding: 7px 11px;
             border-radius: 8px;
             position: relative;
             animation: slideIn 0.3s ease;
@@ -342,8 +408,8 @@
         }
 
         .message p {
-            font-size: 14.5px;
-            line-height: 1.45;
+            font-size: 14px;
+            line-height: 1.4;
             color: #111;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
@@ -352,7 +418,7 @@
             font-size: 11px;
             color: #667781;
             text-align: right;
-            margin-top: 4px;
+            margin-top: 3px;
         }
 
         .message.outgoing .time::after {
@@ -364,12 +430,12 @@
         .typing {
             display: flex;
             gap: 4px;
-            padding: 8px 4px;
+            padding: 6px 2px;
         }
 
         .typing span {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background: #999;
             border-radius: 50%;
             animation: typingBounce 1.4s infinite ease-in-out;
@@ -383,22 +449,28 @@
             40% { transform: scale(1); }
         }
 
-        /* Input area */
+        /* ============ INPUT AREA - FIXED ============ */
         .input-area {
             background: #F0F0F0;
-            padding: 10px 12px;
+            padding: 8px 10px;
+            flex-shrink: 0;
+            min-height: 66px;
+        }
+
+        .input-row {
             display: flex;
             align-items: center;
-            gap: 10px;
-            flex-shrink: 0;
+            gap: 8px;
+            width: 100%;
         }
 
         .text-input {
             flex: 1;
+            min-width: 0; /* Important for flex shrink */
             border: none;
             background: white;
             border-radius: 24px;
-            padding: 12px 18px;
+            padding: 11px 16px;
             font-size: 16px;
             outline: none;
             font-family: inherit;
@@ -410,13 +482,14 @@
         }
 
         .send-btn {
-            width: 50px;
-            height: 50px;
+            width: 46px;
+            height: 46px;
+            min-width: 46px; /* Prevent shrinking */
             border-radius: 50%;
             background: var(--wa-green);
             border: none;
             color: white;
-            font-size: 22px;
+            font-size: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -437,17 +510,16 @@
         .options-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            padding: 8px 0;
+            gap: 6px;
         }
 
         .option-btn {
             background: white;
             border: 2px solid var(--wa-green);
             color: var(--wa-dark-green);
-            padding: 10px 16px;
-            border-radius: 20px;
-            font-size: 14px;
+            padding: 9px 14px;
+            border-radius: 18px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
@@ -461,27 +533,22 @@
         }
 
         /* Photo upload */
-        .photo-upload-container {
-            width: 100%;
-        }
-
         .photo-upload {
             display: block;
             width: 100%;
-            padding: 20px;
+            padding: 16px;
             background: white;
             border-radius: 16px;
             text-align: center;
             border: 2px dashed var(--wa-green);
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 15px;
+            font-size: 14px;
             color: var(--wa-dark-green);
         }
 
         .photo-upload:hover {
             background: #f0fff4;
-            border-color: var(--wa-dark-green);
         }
 
         .photo-upload input {
@@ -489,21 +556,22 @@
         }
 
         .photo-preview {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 12px;
-            margin-top: 8px;
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 10px;
+            margin-top: 6px;
             object-fit: cover;
         }
 
         /* Date input */
         .date-input {
+            flex: 1;
+            min-width: 0;
             background: white;
             border: 2px solid var(--wa-green);
             border-radius: 16px;
-            padding: 14px 18px;
+            padding: 11px 14px;
             font-size: 16px;
-            flex: 1;
             font-family: inherit;
             outline: none;
             -webkit-appearance: none;
@@ -516,48 +584,48 @@
         /* Celebration */
         .celebration {
             text-align: center;
-            padding: 16px;
+            padding: 12px;
         }
 
         .celebration h3 {
-            font-size: 20px;
-            margin-bottom: 8px;
+            font-size: 18px;
+            margin-bottom: 6px;
             color: var(--dark);
         }
 
         .celebration p {
             color: #666;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            font-size: 14px;
         }
 
         .price-tag {
             background: var(--wa-green);
             color: white;
-            padding: 8px 24px;
-            border-radius: 20px;
-            font-size: 20px;
+            padding: 6px 20px;
+            border-radius: 16px;
+            font-size: 18px;
             font-weight: 700;
             display: inline-block;
-            margin: 8px 0 16px;
+            margin: 6px 0 12px;
         }
 
         .pay-btn {
             background: linear-gradient(135deg, var(--primary), #FF8E53);
             color: white;
             border: none;
-            padding: 16px 40px;
-            border-radius: 30px;
-            font-size: 18px;
+            padding: 14px 32px;
+            border-radius: 25px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             font-family: inherit;
-            box-shadow: 0 8px 30px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4);
         }
 
         .pay-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 12px 40px rgba(255, 107, 107, 0.5);
         }
 
         /* ============ FOOTER ============ */
@@ -577,6 +645,11 @@
             color: var(--secondary);
             text-decoration: none;
         }
+
+        /* Prevent body scroll when modal is open */
+        body.modal-open {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
@@ -594,9 +667,9 @@
                 <div class="feature-badge">📱 Mobile-friendly</div>
             </div>
             
-            <a href="#creer" class="cta-button">
+            <button class="cta-button" id="openChat">
                 Créer maintenant 🚀
-            </a>
+            </button>
             
             <p class="price-hero">À partir de <strong>9€</strong> seulement</p>
         </div>
@@ -624,9 +697,15 @@
         </div>
     </section>
 
-    <!-- ============ CHAT SECTION ============ -->
-    <section class="chat-section" id="creer">
-        <h2 class="section-title">✨ Créez votre site maintenant</h2>
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <p>🎂 FêteIci — Fait avec ❤️ pour célébrer ceux qu'on aime</p>
+        <p style="margin-top: 8px;"><a href="#">Mentions légales</a> · <a href="#">Contact</a></p>
+    </footer>
+
+    <!-- ============ CHAT MODAL ============ -->
+    <div class="modal-overlay" id="modalOverlay">
+        <button class="close-modal" id="closeModal">✕</button>
         
         <div class="phone-mockup">
             <div class="phone-screen">
@@ -647,13 +726,7 @@
                 <div class="input-area" id="inputArea"></div>
             </div>
         </div>
-    </section>
-
-    <!-- ============ FOOTER ============ -->
-    <footer class="footer">
-        <p>🎂 FêteIci — Fait avec ❤️ pour célébrer ceux qu'on aime</p>
-        <p style="margin-top: 8px;"><a href="#">Mentions légales</a> · <a href="#">Contact</a></p>
-    </footer>
+    </div>
 
     <script>
         // Chat flow configuration
@@ -661,12 +734,12 @@
             {
                 id: 'welcome',
                 messages: [
-                    "Salut ! 👋 Je suis FêteIci, ton assistant pour créer un site d'anniversaire personnalisé !",
+                    "Salut ! 👋 Je suis FêteIci !",
                     "C'est pour l'anniversaire de qui ? 🎈"
                 ],
                 input: 'text',
                 field: 'name',
-                placeholder: "Prénom de la personne..."
+                placeholder: "Prénom..."
             },
             {
                 id: 'age',
@@ -677,13 +750,13 @@
                 input: 'text',
                 field: 'age',
                 placeholder: "Ex: 30",
-                validate: (v) => /^\d+$/.test(v) ? null : "Juste le nombre s'il te plaît 😊"
+                validate: (v) => /^\d+$/.test(v) ? null : "Juste le nombre 😊"
             },
             {
                 id: 'date',
                 messages: [
-                    "{{age}} ans, c'est un cap ! 🎉",
-                    "C'est quand la fête ?"
+                    "{{age}} ans, beau cap ! 🎉",
+                    "C'est quand ?"
                 ],
                 input: 'date',
                 field: 'date'
@@ -692,17 +765,17 @@
                 id: 'theme',
                 messages: [
                     "Noté ! 📅",
-                    "Quel style pour le site ?"
+                    "Quel style ?"
                 ],
                 input: 'options',
-                options: ['🎈 Classique', '🎨 Coloré', '✨ Élégant', '🎉 Festif', '💖 Romantique', '🌟 Moderne'],
+                options: ['🎈 Classique', '🎨 Coloré', '✨ Élégant', '🎉 Festif', '💖 Romantique'],
                 field: 'theme'
             },
             {
                 id: 'photo',
                 messages: [
-                    "{{theme}}, excellent choix ! 🔥",
-                    "Envoie-moi une photo de {{name}} 📸"
+                    "{{theme}}, top ! 🔥",
+                    "Une photo de {{name}} 📸"
                 ],
                 input: 'photo',
                 field: 'photo'
@@ -710,18 +783,18 @@
             {
                 id: 'message',
                 messages: [
-                    "Trop bien ! 😍",
-                    "Un message perso pour {{name}} ?"
+                    "Parfait ! 😍",
+                    "Un message pour {{name}} ?"
                 ],
                 input: 'text',
                 field: 'message',
-                placeholder: "Ton message d'anniversaire..."
+                placeholder: "Ton message..."
             },
             {
                 id: 'recap',
                 messages: [
-                    "Parfait ! Voilà le récap :",
-                    "🎂 {{name}} fête ses {{age}} ans\n📅 {{date}}\n🎨 Thème {{theme}}\n💌 \"{{message}}\""
+                    "Voilà le récap :",
+                    "🎂 {{name}} fête ses {{age}} ans\n📅 {{date}}\n🎨 {{theme}}\n💌 \"{{message}}\""
                 ],
                 input: 'celebration',
                 field: null
@@ -731,16 +804,41 @@
         // State
         let currentStep = 0;
         let userData = {};
+        let chatStarted = false;
 
         // DOM elements
+        const modalOverlay = document.getElementById('modalOverlay');
+        const openChatBtn = document.getElementById('openChat');
+        const closeModalBtn = document.getElementById('closeModal');
         const chat = document.getElementById('chat');
         const inputArea = document.getElementById('inputArea');
         const progress = document.getElementById('progress');
         const statusEl = document.getElementById('status');
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => processStep(flow[0]), 800);
+        // Open modal
+        openChatBtn.addEventListener('click', () => {
+            modalOverlay.classList.add('active');
+            document.body.classList.add('modal-open');
+            
+            // Start chat only once
+            if (!chatStarted) {
+                chatStarted = true;
+                setTimeout(() => processStep(flow[0]), 600);
+            }
+        });
+
+        // Close modal
+        closeModalBtn.addEventListener('click', () => {
+            modalOverlay.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        });
+
+        // Close on overlay click (not on phone)
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
         });
 
         // Process a step
@@ -765,7 +863,7 @@
                 chat.appendChild(typing);
                 scrollToBottom();
 
-                const delay = 800 + Math.random() * 600;
+                const delay = 600 + Math.random() * 400;
                 setTimeout(() => {
                     typing.remove();
                     statusEl.textContent = 'en ligne';
@@ -797,13 +895,13 @@
 
             switch (step.input) {
                 case 'text':
-                    const textContainer = document.createElement('div');
-                    textContainer.style.cssText = 'display:flex;gap:10px;width:100%;align-items:center;';
+                    const textRow = document.createElement('div');
+                    textRow.className = 'input-row';
                     
                     const input = document.createElement('input');
                     input.type = 'text';
                     input.className = 'text-input';
-                    input.placeholder = step.placeholder || 'Tapez votre message...';
+                    input.placeholder = step.placeholder || 'Message...';
                     input.autocomplete = 'off';
                     input.autocapitalize = 'sentences';
                     
@@ -837,23 +935,21 @@
                         }
                     });
                     
-                    textContainer.appendChild(input);
-                    textContainer.appendChild(btn);
-                    inputArea.appendChild(textContainer);
+                    textRow.appendChild(input);
+                    textRow.appendChild(btn);
+                    inputArea.appendChild(textRow);
                     
-                    // Focus after a short delay to ensure DOM is ready
-                    setTimeout(() => input.focus(), 100);
+                    setTimeout(() => input.focus(), 150);
                     break;
 
                 case 'date':
-                    const dateContainer = document.createElement('div');
-                    dateContainer.style.cssText = 'display:flex;gap:10px;width:100%;align-items:center;';
+                    const dateRow = document.createElement('div');
+                    dateRow.className = 'input-row';
                     
                     const dateInput = document.createElement('input');
                     dateInput.type = 'date';
                     dateInput.className = 'date-input';
                     
-                    // Set min date to today
                     const today = new Date().toISOString().split('T')[0];
                     dateInput.min = today;
                     dateInput.value = today;
@@ -872,9 +968,9 @@
                         }
                     });
                     
-                    dateContainer.appendChild(dateInput);
-                    dateContainer.appendChild(dateBtn);
-                    inputArea.appendChild(dateContainer);
+                    dateRow.appendChild(dateInput);
+                    dateRow.appendChild(dateBtn);
+                    inputArea.appendChild(dateRow);
                     break;
 
                 case 'options':
@@ -894,12 +990,9 @@
                     break;
 
                 case 'photo':
-                    const photoContainer = document.createElement('div');
-                    photoContainer.className = 'photo-upload-container';
-                    
                     const photoLabel = document.createElement('label');
                     photoLabel.className = 'photo-upload';
-                    photoLabel.innerHTML = '📷 Appuyer pour choisir une photo';
+                    photoLabel.innerHTML = '📷 Choisir une photo';
                     
                     const photoInput = document.createElement('input');
                     photoInput.type = 'file';
@@ -912,15 +1005,14 @@
                             reader.onload = (ev) => {
                                 userData.photoData = ev.target.result;
                                 addMessage(`<img src="${ev.target.result}" class="photo-preview" alt="Photo">`, 'outgoing', true);
-                                handleUserInput('[Photo envoyée]', step.field, false);
+                                handleUserInput('[Photo]', step.field, false);
                             };
                             reader.readAsDataURL(file);
                         }
                     });
                     
                     photoLabel.appendChild(photoInput);
-                    photoContainer.appendChild(photoLabel);
-                    inputArea.appendChild(photoContainer);
+                    inputArea.appendChild(photoLabel);
                     break;
 
                 case 'celebration':
@@ -928,7 +1020,7 @@
                     celebDiv.className = 'celebration';
                     celebDiv.innerHTML = `
                         <h3>🎉 Ton site est prêt !</h3>
-                        <p>Site personnalisé + vidéo d'anniversaire</p>
+                        <p>Site + vidéo personnalisée</p>
                         <div class="price-tag">9€</div>
                         <br>
                         <button class="pay-btn" type="button">💳 Créer le site</button>
@@ -942,7 +1034,7 @@
                     
                     celebDiv.querySelector('.pay-btn').addEventListener('click', handlePayment);
                     
-                    inputArea.innerHTML = '<p style="text-align:center;padding:12px;color:#666;font-size:14px;">✨ Cliquez sur le bouton ci-dessus</p>';
+                    inputArea.innerHTML = '<p style="text-align:center;padding:12px;color:#666;font-size:13px;">👆 Cliquez sur le bouton</p>';
                     break;
             }
         }
@@ -960,11 +1052,11 @@
             currentStep++;
             
             if (currentStep < flow.length) {
-                setTimeout(() => processStep(flow[currentStep]), 400);
+                setTimeout(() => processStep(flow[currentStep]), 350);
             }
         }
 
-        // Interpolate variables in text
+        // Interpolate variables
         function interpolate(text) {
             return text.replace(/\{\{(\w+)\}\}/g, (match, key) => userData[key] || match);
         }
@@ -984,21 +1076,8 @@
 
         // Handle payment
         function handlePayment() {
-            // For demo - show collected data
-            const summary = `
-Données collectées:
-- Prénom: ${userData.name}
-- Âge: ${userData.age}
-- Date: ${userData.date}
-- Thème: ${userData.theme}
-- Message: ${userData.message}
-- Photo: ${userData.photoData ? '✓ Reçue' : '✗ Non reçue'}
-            `;
-            
-            alert('Redirection vers Stripe Checkout...\n\n' + summary);
-            
-            // In production:
-            // window.location.href = '/api/create-checkout?data=' + encodeURIComponent(JSON.stringify(userData));
+            const summary = `Données:\n- ${userData.name}, ${userData.age} ans\n- ${userData.date}\n- ${userData.theme}\n- "${userData.message}"`;
+            alert('→ Stripe Checkout\n\n' + summary);
         }
     </script>
 </body>
