@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FêteIci 🎂 - Créez un site d'anniversaire en 2 minutes</title>
+    <title>FêteIci 🎂 - Créez un site d'anniversaire personnalisé en 2 minutes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,47 +14,252 @@
         }
 
         :root {
+            --primary: #FF6B6B;
+            --primary-dark: #E85555;
+            --secondary: #FFE66D;
+            --accent: #4ECDC4;
+            --dark: #2D3436;
+            --light: #F8F9FA;
             --wa-green: #25D366;
             --wa-dark-green: #128C7E;
             --wa-light-green: #DCF8C6;
             --wa-blue: #34B7F1;
             --wa-bg: #ECE5DD;
             --wa-header: #075E54;
-            --wa-incoming: #FFFFFF;
-            --wa-outgoing: #DCF8C6;
-            --wa-time: #667781;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--wa-bg);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
         }
 
-        .phone-container {
-            width: 100%;
-            max-width: 420px;
-            height: 100vh;
-            max-height: 900px;
-            background: var(--wa-bg);
+        /* ============ HERO SECTION ============ */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        @media (min-width: 500px) {
-            .phone-container {
-                border-radius: 24px;
-                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-                height: 90vh;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+
+        .logo {
+            font-size: 64px;
+            margin-bottom: 16px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, var(--secondary), #FFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .hero-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .feature-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cta-button {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 18px 48px;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .price-hero {
+            margin-top: 24px;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+        }
+
+        .price-hero strong {
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+
+        /* ============ HOW IT WORKS ============ */
+        .how-it-works {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 48px;
+        }
+
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 32px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            text-align: center;
+            padding: 32px 24px;
+            background: var(--light);
+            border-radius: 24px;
+            transition: transform 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* ============ CHAT SECTION ============ */
+        .chat-section {
+            padding: 60px 20px 100px;
+            background: linear-gradient(180deg, var(--light) 0%, #E8E8E8 100%);
+        }
+
+        .chat-section .section-title {
+            margin-bottom: 32px;
+        }
+
+        .phone-mockup {
+            max-width: 420px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 48px;
+            padding: 12px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.3);
+        }
+
+        .phone-screen {
+            background: var(--wa-bg);
+            border-radius: 40px;
+            overflow: hidden;
+            height: 700px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 500px) {
+            .phone-mockup {
+                border-radius: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+            .phone-screen {
+                border-radius: 0;
+                height: 85vh;
             }
         }
 
-        /* Header */
+        /* Chat Header */
         .chat-header {
             background: var(--wa-header);
             color: white;
@@ -66,24 +271,38 @@
         }
 
         .avatar {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             background: linear-gradient(135deg, #FF6B6B, #FFE66D);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 22px;
         }
 
-        .contact-info h1 {
-            font-size: 16px;
+        .contact-info h2 {
+            font-size: 17px;
             font-weight: 600;
         }
 
         .contact-info p {
-            font-size: 12px;
-            opacity: 0.8;
+            font-size: 13px;
+            opacity: 0.85;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            background: rgba(0,0,0,0.1);
+            height: 3px;
+            flex-shrink: 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--wa-green);
+            transition: width 0.3s ease;
+            width: 0%;
         }
 
         /* Chat area */
@@ -106,37 +325,32 @@
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .message.incoming {
-            background: var(--wa-incoming);
+            background: white;
             align-self: flex-start;
             border-top-left-radius: 0;
         }
 
         .message.outgoing {
-            background: var(--wa-outgoing);
+            background: var(--wa-light-green);
             align-self: flex-end;
             border-top-right-radius: 0;
         }
 
         .message p {
-            font-size: 14px;
-            line-height: 1.4;
+            font-size: 14.5px;
+            line-height: 1.45;
             color: #111;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
         .message .time {
             font-size: 11px;
-            color: var(--wa-time);
+            color: #667781;
             text-align: right;
             margin-top: 4px;
         }
@@ -150,7 +364,7 @@
         .typing {
             display: flex;
             gap: 4px;
-            padding: 12px;
+            padding: 8px 4px;
         }
 
         .typing span {
@@ -158,13 +372,13 @@
             height: 8px;
             background: #999;
             border-radius: 50%;
-            animation: bounce 1.4s infinite ease-in-out;
+            animation: typingBounce 1.4s infinite ease-in-out;
         }
 
         .typing span:nth-child(1) { animation-delay: -0.32s; }
         .typing span:nth-child(2) { animation-delay: -0.16s; }
 
-        @keyframes bounce {
+        @keyframes typingBounce {
             0%, 80%, 100% { transform: scale(0.6); }
             40% { transform: scale(1); }
         }
@@ -172,10 +386,10 @@
         /* Input area */
         .input-area {
             background: #F0F0F0;
-            padding: 8px 16px;
+            padding: 10px 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             flex-shrink: 0;
         }
 
@@ -184,33 +398,39 @@
             border: none;
             background: white;
             border-radius: 24px;
-            padding: 12px 16px;
-            font-size: 15px;
+            padding: 12px 18px;
+            font-size: 16px;
             outline: none;
+            font-family: inherit;
+            -webkit-appearance: none;
+        }
+
+        .text-input:focus {
+            box-shadow: 0 0 0 2px var(--wa-green);
         }
 
         .send-btn {
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: var(--wa-green);
             border: none;
             color: white;
-            font-size: 20px;
+            font-size: 22px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.1s;
+            transition: transform 0.1s, background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .send-btn:hover {
+            background: var(--wa-dark-green);
         }
 
         .send-btn:active {
             transform: scale(0.95);
-        }
-
-        .send-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
         }
 
         /* Options buttons */
@@ -218,7 +438,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 8px;
+            padding: 8px 0;
         }
 
         .option-btn {
@@ -231,27 +451,37 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
+            font-family: inherit;
         }
 
-        .option-btn:hover {
+        .option-btn:hover, .option-btn:focus {
             background: var(--wa-green);
             color: white;
+            outline: none;
         }
 
         /* Photo upload */
-        .photo-upload {
+        .photo-upload-container {
             width: 100%;
-            padding: 24px;
+        }
+
+        .photo-upload {
+            display: block;
+            width: 100%;
+            padding: 20px;
             background: white;
-            border-radius: 12px;
+            border-radius: 16px;
             text-align: center;
             border: 2px dashed var(--wa-green);
             cursor: pointer;
-            margin-top: 8px;
+            transition: all 0.2s;
+            font-size: 15px;
+            color: var(--wa-dark-green);
         }
 
         .photo-upload:hover {
             background: #f0fff4;
+            border-color: var(--wa-dark-green);
         }
 
         .photo-upload input {
@@ -260,102 +490,170 @@
 
         .photo-preview {
             max-width: 200px;
-            border-radius: 8px;
+            max-height: 200px;
+            border-radius: 12px;
             margin-top: 8px;
+            object-fit: cover;
         }
 
-        /* Hidden elements */
-        .hidden {
-            display: none !important;
-        }
-
-        /* Date input styling */
+        /* Date input */
         .date-input {
             background: white;
             border: 2px solid var(--wa-green);
-            border-radius: 12px;
-            padding: 12px 16px;
+            border-radius: 16px;
+            padding: 14px 18px;
             font-size: 16px;
-            margin-top: 8px;
-            width: 100%;
-            max-width: 200px;
+            flex: 1;
+            font-family: inherit;
+            outline: none;
+            -webkit-appearance: none;
         }
 
-        /* Progress bar */
-        .progress-container {
-            background: rgba(0,0,0,0.1);
-            height: 3px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: var(--wa-green);
-            transition: width 0.3s ease;
+        .date-input:focus {
+            border-color: var(--wa-dark-green);
         }
 
         /* Celebration */
         .celebration {
             text-align: center;
-            padding: 20px;
+            padding: 16px;
         }
 
-        .celebration h2 {
-            font-size: 24px;
+        .celebration h3 {
+            font-size: 20px;
             margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .celebration p {
+            color: #666;
+            margin-bottom: 12px;
         }
 
         .price-tag {
             background: var(--wa-green);
             color: white;
-            padding: 8px 20px;
+            padding: 8px 24px;
             border-radius: 20px;
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
             display: inline-block;
-            margin: 12px 0;
+            margin: 8px 0 16px;
         }
 
         .pay-btn {
-            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
-            color: #111;
+            background: linear-gradient(135deg, var(--primary), #FF8E53);
+            color: white;
             border: none;
-            padding: 16px 32px;
+            padding: 16px 40px;
             border-radius: 30px;
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 12px;
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+            box-shadow: 0 8px 30px rgba(255, 107, 107, 0.4);
         }
 
         .pay-btn:hover {
             transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(255, 107, 107, 0.5);
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--secondary);
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <div class="phone-container">
-        <div class="chat-header">
-            <div class="avatar">🎂</div>
-            <div class="contact-info">
-                <h1>FêteIci</h1>
-                <p id="status">en ligne</p>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="logo">🎂</div>
+            <h1>Un site d'anniversaire <span>unique en 2 min</span></h1>
+            <p>Créez une page personnalisée pour souhaiter un joyeux anniversaire inoubliable. Simple, rapide, magique.</p>
+            
+            <div class="hero-features">
+                <div class="feature-badge">⚡ Prêt en 2 minutes</div>
+                <div class="feature-badge">🎬 Vidéo personnalisée</div>
+                <div class="feature-badge">📱 Mobile-friendly</div>
+            </div>
+            
+            <a href="#creer" class="cta-button">
+                Créer maintenant 🚀
+            </a>
+            
+            <p class="price-hero">À partir de <strong>9€</strong> seulement</p>
+        </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="how-it-works">
+        <h2 class="section-title">Comment ça marche ?</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-icon">💬</div>
+                <h3>1. Discutez</h3>
+                <p>Répondez à quelques questions simples comme sur WhatsApp</p>
+            </div>
+            <div class="step">
+                <div class="step-icon">📸</div>
+                <h3>2. Personnalisez</h3>
+                <p>Ajoutez une photo et un message personnel</p>
+            </div>
+            <div class="step">
+                <div class="step-icon">🎁</div>
+                <h3>3. Partagez</h3>
+                <p>Recevez le lien de votre site unique à envoyer !</p>
             </div>
         </div>
+    </section>
+
+    <!-- ============ CHAT SECTION ============ -->
+    <section class="chat-section" id="creer">
+        <h2 class="section-title">✨ Créez votre site maintenant</h2>
         
-        <div class="progress-container">
-            <div class="progress-bar" id="progress" style="width: 0%"></div>
-        </div>
+        <div class="phone-mockup">
+            <div class="phone-screen">
+                <div class="chat-header">
+                    <div class="avatar">🎂</div>
+                    <div class="contact-info">
+                        <h2>FêteIci</h2>
+                        <p id="status">en ligne</p>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress"></div>
+                </div>
 
-        <div class="chat-area" id="chat">
-            <!-- Messages will be added here -->
-        </div>
+                <div class="chat-area" id="chat"></div>
 
-        <div class="input-area" id="inputArea">
-            <input type="text" class="text-input" id="textInput" placeholder="Tapez votre message...">
-            <button class="send-btn" id="sendBtn">➤</button>
+                <div class="input-area" id="inputArea"></div>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <p>🎂 FêteIci — Fait avec ❤️ pour célébrer ceux qu'on aime</p>
+        <p style="margin-top: 8px;"><a href="#">Mentions légales</a> · <a href="#">Contact</a></p>
+    </footer>
 
     <script>
         // Chat flow configuration
@@ -363,26 +661,28 @@
             {
                 id: 'welcome',
                 messages: [
-                    "Salut ! 👋 Je suis FêteIci, ton assistant pour créer un site d'anniversaire personnalisé en 2 minutes !",
+                    "Salut ! 👋 Je suis FêteIci, ton assistant pour créer un site d'anniversaire personnalisé !",
                     "C'est pour l'anniversaire de qui ? 🎈"
                 ],
                 input: 'text',
-                field: 'name'
+                field: 'name',
+                placeholder: "Prénom de la personne..."
             },
             {
                 id: 'age',
                 messages: [
-                    "Super ! {{name}}, j'adore ce prénom ! 🌟",
-                    "Il/Elle va avoir quel âge ?"
+                    "{{name}}, super prénom ! 🌟",
+                    "Il/Elle va fêter quel âge ?"
                 ],
                 input: 'text',
                 field: 'age',
+                placeholder: "Ex: 30",
                 validate: (v) => /^\d+$/.test(v) ? null : "Juste le nombre s'il te plaît 😊"
             },
             {
                 id: 'date',
                 messages: [
-                    "{{age}} ans, c'est un bel âge ! 🎉",
+                    "{{age}} ans, c'est un cap ! 🎉",
                     "C'est quand la fête ?"
                 ],
                 input: 'date',
@@ -392,17 +692,17 @@
                 id: 'theme',
                 messages: [
                     "Noté ! 📅",
-                    "Quel thème pour la fête ?"
+                    "Quel style pour le site ?"
                 ],
                 input: 'options',
-                options: ['🎈 Classique', '🦸 Super-héros', '👸 Princesse', '⚽ Sport', '🎮 Gaming', '🦄 Licorne', '🏴‍☠️ Pirate', '✨ Autre'],
+                options: ['🎈 Classique', '🎨 Coloré', '✨ Élégant', '🎉 Festif', '💖 Romantique', '🌟 Moderne'],
                 field: 'theme'
             },
             {
                 id: 'photo',
                 messages: [
                     "{{theme}}, excellent choix ! 🔥",
-                    "Maintenant, envoie-moi une photo de {{name}} pour personnaliser le site ! 📸"
+                    "Envoie-moi une photo de {{name}} 📸"
                 ],
                 input: 'photo',
                 field: 'photo'
@@ -410,50 +710,37 @@
             {
                 id: 'message',
                 messages: [
-                    "Trop mignon ! 😍",
-                    "Un petit message personnel pour {{name}} ?"
+                    "Trop bien ! 😍",
+                    "Un message perso pour {{name}} ?"
                 ],
                 input: 'text',
-                field: 'message'
+                field: 'message',
+                placeholder: "Ton message d'anniversaire..."
             },
             {
                 id: 'recap',
                 messages: [
                     "Parfait ! Voilà le récap :",
-                    "🎂 {{name}} fête ses {{age}} ans\n📅 {{date}}\n🎨 Thème {{theme}}\n💌 \"{{message}}\"",
-                    {
-                        type: 'celebration',
-                        content: `
-                            <div class="celebration">
-                                <h2>🎉 Ton site est prêt à être créé !</h2>
-                                <p>Site personnalisé + vidéo d'anniversaire</p>
-                                <div class="price-tag">9€ seulement</div>
-                                <br>
-                                <button class="pay-btn" onclick="handlePayment()">💳 Créer le site maintenant</button>
-                            </div>
-                        `
-                    }
+                    "🎂 {{name}} fête ses {{age}} ans\n📅 {{date}}\n🎨 Thème {{theme}}\n💌 \"{{message}}\""
                 ],
-                input: 'none'
+                input: 'celebration',
+                field: null
             }
         ];
 
         // State
         let currentStep = 0;
         let userData = {};
-        let isTyping = false;
 
         // DOM elements
         const chat = document.getElementById('chat');
-        const textInput = document.getElementById('textInput');
-        const sendBtn = document.getElementById('sendBtn');
         const inputArea = document.getElementById('inputArea');
         const progress = document.getElementById('progress');
-        const status = document.getElementById('status');
+        const statusEl = document.getElementById('status');
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => processStep(flow[0]), 500);
+            setTimeout(() => processStep(flow[0]), 800);
         });
 
         // Process a step
@@ -462,12 +749,7 @@
             
             for (const msg of step.messages) {
                 await showTyping();
-                
-                if (typeof msg === 'object' && msg.type === 'celebration') {
-                    addMessage(msg.content, 'incoming', true);
-                } else {
-                    addMessage(interpolate(msg), 'incoming');
-                }
+                addMessage(interpolate(msg), 'incoming');
             }
 
             setupInput(step);
@@ -476,18 +758,19 @@
         // Show typing indicator
         function showTyping() {
             return new Promise(resolve => {
-                status.textContent = 'écrit...';
+                statusEl.textContent = 'écrit...';
                 const typing = document.createElement('div');
-                typing.className = 'message incoming typing-msg';
+                typing.className = 'message incoming';
                 typing.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
                 chat.appendChild(typing);
                 scrollToBottom();
 
+                const delay = 800 + Math.random() * 600;
                 setTimeout(() => {
                     typing.remove();
-                    status.textContent = 'en ligne';
+                    statusEl.textContent = 'en ligne';
                     resolve();
-                }, 1000 + Math.random() * 500);
+                }, delay);
             });
         }
 
@@ -514,16 +797,22 @@
 
             switch (step.input) {
                 case 'text':
-                    inputArea.innerHTML = `
-                        <input type="text" class="text-input" id="textInput" placeholder="Tapez votre message...">
-                        <button class="send-btn" id="sendBtn">➤</button>
-                    `;
-                    const input = document.getElementById('textInput');
-                    const btn = document.getElementById('sendBtn');
+                    const textContainer = document.createElement('div');
+                    textContainer.style.cssText = 'display:flex;gap:10px;width:100%;align-items:center;';
                     
-                    input.focus();
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'text-input';
+                    input.placeholder = step.placeholder || 'Tapez votre message...';
+                    input.autocomplete = 'off';
+                    input.autocapitalize = 'sentences';
                     
-                    const submit = () => {
+                    const btn = document.createElement('button');
+                    btn.className = 'send-btn';
+                    btn.innerHTML = '➤';
+                    btn.type = 'button';
+                    
+                    const submitText = () => {
                         const value = input.value.trim();
                         if (!value) return;
                         
@@ -532,6 +821,7 @@
                             if (error) {
                                 addMessage(error, 'incoming');
                                 input.value = '';
+                                input.focus();
                                 return;
                             }
                         }
@@ -539,82 +829,129 @@
                         handleUserInput(value, step.field);
                     };
                     
-                    btn.onclick = submit;
-                    input.onkeypress = (e) => e.key === 'Enter' && submit();
+                    btn.addEventListener('click', submitText);
+                    input.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            submitText();
+                        }
+                    });
+                    
+                    textContainer.appendChild(input);
+                    textContainer.appendChild(btn);
+                    inputArea.appendChild(textContainer);
+                    
+                    // Focus after a short delay to ensure DOM is ready
+                    setTimeout(() => input.focus(), 100);
                     break;
 
                 case 'date':
                     const dateContainer = document.createElement('div');
-                    dateContainer.style.cssText = 'display: flex; gap: 8px; width: 100%;';
-                    dateContainer.innerHTML = `
-                        <input type="date" class="date-input" id="dateInput" style="flex:1">
-                        <button class="send-btn" id="sendBtn">➤</button>
-                    `;
-                    inputArea.appendChild(dateContainer);
+                    dateContainer.style.cssText = 'display:flex;gap:10px;width:100%;align-items:center;';
                     
-                    const dateInput = document.getElementById('dateInput');
-                    const dateBtn = document.getElementById('sendBtn');
+                    const dateInput = document.createElement('input');
+                    dateInput.type = 'date';
+                    dateInput.className = 'date-input';
                     
-                    dateBtn.onclick = () => {
+                    // Set min date to today
+                    const today = new Date().toISOString().split('T')[0];
+                    dateInput.min = today;
+                    dateInput.value = today;
+                    
+                    const dateBtn = document.createElement('button');
+                    dateBtn.className = 'send-btn';
+                    dateBtn.innerHTML = '➤';
+                    dateBtn.type = 'button';
+                    
+                    dateBtn.addEventListener('click', () => {
                         if (dateInput.value) {
                             const formatted = new Date(dateInput.value).toLocaleDateString('fr-FR', {
                                 weekday: 'long', day: 'numeric', month: 'long'
                             });
                             handleUserInput(formatted, step.field);
                         }
-                    };
+                    });
+                    
+                    dateContainer.appendChild(dateInput);
+                    dateContainer.appendChild(dateBtn);
+                    inputArea.appendChild(dateContainer);
                     break;
 
                 case 'options':
-                    const container = document.createElement('div');
-                    container.className = 'options-container';
-                    container.style.cssText = 'padding: 8px; display: flex; flex-wrap: wrap; gap: 8px;';
+                    const optContainer = document.createElement('div');
+                    optContainer.className = 'options-container';
                     
                     step.options.forEach(opt => {
-                        const btn = document.createElement('button');
-                        btn.className = 'option-btn';
-                        btn.textContent = opt;
-                        btn.onclick = () => handleUserInput(opt, step.field);
-                        container.appendChild(btn);
+                        const optBtn = document.createElement('button');
+                        optBtn.className = 'option-btn';
+                        optBtn.textContent = opt;
+                        optBtn.type = 'button';
+                        optBtn.addEventListener('click', () => handleUserInput(opt, step.field));
+                        optContainer.appendChild(optBtn);
                     });
                     
-                    inputArea.appendChild(container);
+                    inputArea.appendChild(optContainer);
                     break;
 
                 case 'photo':
-                    inputArea.innerHTML = `
-                        <label class="photo-upload" style="flex:1; margin:0;">
-                            <input type="file" accept="image/*" id="photoInput">
-                            📷 Appuyer pour choisir une photo
-                        </label>
-                    `;
+                    const photoContainer = document.createElement('div');
+                    photoContainer.className = 'photo-upload-container';
                     
-                    document.getElementById('photoInput').onchange = (e) => {
+                    const photoLabel = document.createElement('label');
+                    photoLabel.className = 'photo-upload';
+                    photoLabel.innerHTML = '📷 Appuyer pour choisir une photo';
+                    
+                    const photoInput = document.createElement('input');
+                    photoInput.type = 'file';
+                    photoInput.accept = 'image/*';
+                    
+                    photoInput.addEventListener('change', (e) => {
                         const file = e.target.files[0];
                         if (file) {
                             const reader = new FileReader();
                             reader.onload = (ev) => {
                                 userData.photoData = ev.target.result;
-                                
-                                // Show photo in chat
                                 addMessage(`<img src="${ev.target.result}" class="photo-preview" alt="Photo">`, 'outgoing', true);
-                                
                                 handleUserInput('[Photo envoyée]', step.field, false);
                             };
                             reader.readAsDataURL(file);
                         }
-                    };
+                    });
+                    
+                    photoLabel.appendChild(photoInput);
+                    photoContainer.appendChild(photoLabel);
+                    inputArea.appendChild(photoContainer);
                     break;
 
-                case 'none':
-                    inputArea.innerHTML = '<p style="text-align:center;padding:16px;color:#666;">✨ Conversation terminée</p>';
+                case 'celebration':
+                    const celebDiv = document.createElement('div');
+                    celebDiv.className = 'celebration';
+                    celebDiv.innerHTML = `
+                        <h3>🎉 Ton site est prêt !</h3>
+                        <p>Site personnalisé + vidéo d'anniversaire</p>
+                        <div class="price-tag">9€</div>
+                        <br>
+                        <button class="pay-btn" type="button">💳 Créer le site</button>
+                    `;
+                    
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = 'message incoming';
+                    msgDiv.appendChild(celebDiv);
+                    chat.appendChild(msgDiv);
+                    scrollToBottom();
+                    
+                    celebDiv.querySelector('.pay-btn').addEventListener('click', handlePayment);
+                    
+                    inputArea.innerHTML = '<p style="text-align:center;padding:12px;color:#666;font-size:14px;">✨ Cliquez sur le bouton ci-dessus</p>';
                     break;
             }
         }
 
         // Handle user input
         function handleUserInput(value, field, showMessage = true) {
-            userData[field] = value;
+            if (field) {
+                userData[field] = value;
+            }
             
             if (showMessage) {
                 addMessage(value, 'outgoing');
@@ -623,7 +960,7 @@
             currentStep++;
             
             if (currentStep < flow.length) {
-                setTimeout(() => processStep(flow[currentStep]), 500);
+                setTimeout(() => processStep(flow[currentStep]), 400);
             }
         }
 
@@ -640,13 +977,28 @@
 
         // Scroll chat to bottom
         function scrollToBottom() {
-            chat.scrollTop = chat.scrollHeight;
+            setTimeout(() => {
+                chat.scrollTop = chat.scrollHeight;
+            }, 50);
         }
 
-        // Handle payment (placeholder)
+        // Handle payment
         function handlePayment() {
-            alert('Redirection vers Stripe...\n\nDonnées collectées:\n' + JSON.stringify(userData, null, 2));
-            // In production: redirect to Stripe Checkout
+            // For demo - show collected data
+            const summary = `
+Données collectées:
+- Prénom: ${userData.name}
+- Âge: ${userData.age}
+- Date: ${userData.date}
+- Thème: ${userData.theme}
+- Message: ${userData.message}
+- Photo: ${userData.photoData ? '✓ Reçue' : '✗ Non reçue'}
+            `;
+            
+            alert('Redirection vers Stripe Checkout...\n\n' + summary);
+            
+            // In production:
+            // window.location.href = '/api/create-checkout?data=' + encodeURIComponent(JSON.stringify(userData));
         }
     </script>
 </body>
